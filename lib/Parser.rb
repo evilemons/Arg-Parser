@@ -17,13 +17,13 @@ class Parser
 	end
 	def get_arg_for_option option
 		unless option_exist? option
-			raise "There is no option: '#{option}'"
+			raise ArgumentError, "There is no option: '#{option}'"
 		end
 		id = @options[option]
 		id += 1
 		arg = @argv[id]
 		unless arg
-			raise "No argument for option '#{option}'"
+			raise ArgumentError, "No argument for option '#{option}'"
 		end
 		if arg[0] == "-"
 			raise "'#{arg}' is not an argument, tis an option"
