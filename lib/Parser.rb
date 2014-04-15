@@ -1,5 +1,13 @@
 #!/usr/bin/env ruby
 
+class ParseError < StandardError
+	attr_reader :object
+
+	def initialize object
+		@object = object
+	end
+end
+
 class Parser
 	def initialize arg #(array)
 		@argv= arg
@@ -17,21 +25,30 @@ class Parser
 	end
 	def get_arg_for_option option
 		unless option_exist? option
-			raise ArgumentError, "There is no option: '#{option}'"
+			raise ParseError.new("NoOption"), "There is no option: '#{option}'"
 		end
 		id = @options[option]
 		id += 1
 		arg = @argv[id]
 		unless arg
-			raise ArgumentError, "No argument for option '#{option}'"
+			raise ParseError.new("NoArgument"), "No argument for option '#{option}'"
 		end
 		if arg[0] == "-"
-			raise "'#{arg}' is not an argument, tis an option"
+			raise ParseError.new("ArgIsOption"), "'#{arg}' is not an argument, tis an option"
 		end
 		arg
 	end
+	def arg_for_option option
+		opt = self.get_arg_for_option option
+		yield opt
+	end
 end
 
-x = Parser.new ARGV
-puts x.option_exist? "-b"
-puts x.get_arg_for_option "-b"
+if __FILE__ == $0
+
+	x = Parser.new ARGV
+	x.arg_for_option "-b" do |x|
+		puts x
+	end
+
+end
