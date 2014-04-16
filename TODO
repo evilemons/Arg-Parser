@@ -1,9 +1,2 @@
 TODO:
-	cleanup 
-		- raise named exeption, currently just description
-	
-	feature
-		- use of blocks. 
-		EX:
-			%option(_with_option) do (|arg|); ...; end
-
+  Documentation
