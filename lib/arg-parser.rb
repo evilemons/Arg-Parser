@@ -39,15 +39,28 @@ class ArgParser
 		arg
 	end
 	def arg_for_option option
-		opt = self.get_arg_for_option option
-		yield opt
+		begin
+			opt = self.get_arg_for_option option
+		rescue ParseError => error
+		end
+		
+		if error
+			yield opt, error
+		else
+			yield opt
+		end
 	end
 end
 
 if __FILE__ == $0
 
 	x = ArgParser.new ARGV
-	x.arg_for_option "-b" do |x|
+	x.arg_for_option "-b" do |x, e|
+		if e
+			puts e.message
+			puts e.object
+			exit -1
+		end
 		puts x
 	end
 
