@@ -52,6 +52,7 @@ class ArgParser
 	end
 end
 
+#Example
 if __FILE__ == $0
 
 	x = ArgParser.new ARGV
