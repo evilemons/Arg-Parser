@@ -25,7 +25,8 @@ class ArgParser
 	end
 	def get_arg_for_option option
 		unless option_exist? option
-			raise ParseError.new("NoOption"), "There is no option: '#{option}'"
+			#raise ParseError.new("NoOption"), "There is no option: '#{option}'"
+			return
 		end
 		id = @options[option]
 		id += 1
