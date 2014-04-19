@@ -34,9 +34,6 @@ class ArgParser
 		unless arg
 			raise ParseError.new("NoArgument"), "No argument for option '#{option}'"
 		end
-		if arg[0] == "-"
-			raise ParseError.new("ArgIsOption"), "'#{arg}' is not an argument, tis an option"
-		end
 		arg
 	end
 	def arg_for_option option
